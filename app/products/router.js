@@ -4,6 +4,7 @@ const os = require('os');
 
 const productController = require('./controller');
 
-router.post('/products', multer({dest: os.tmpdir()}).single('image'), productController.store)
+router.post('/products', multer({ dest: os.tmpdir() }).single('image'), productController.store)
+router.get('/products', productController.index)
 
 module.exports = router;
