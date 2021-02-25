@@ -77,12 +77,28 @@ async function index(req, res, next) {
 
     try {
 
-        let { limit = 10, skip = 0, q = '' } = req.query;
+        let { limit = 10, skip = 0, q = '', category = '' } = req.query;
         let criteria = {}
+
         if (q.length) {
             criteria = {
                 ...criteria,
                 name: { $regex: `${q}`, $options: 'i' }
+            }
+        }
+
+        if (category.length) {
+            category = await Category.findOne(
+                {
+                    name:
+                    {
+                        $regex: `${category}`,
+                        $options: 'i'
+                    }
+                });
+
+            if (category) {
+                criteria = { ...criteria, category: category._id }
             }
         }
 
