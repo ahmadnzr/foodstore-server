@@ -23,16 +23,16 @@ async function store(req, res, next) {
             }
         }
 
-        if(payload.tags && payload.tags.length){
+        if (payload.tags && payload.tags.length) {
             let tags =
-              await Tag
-              .find({name: {$in: payload.tags}});
-      
-            if(tags.length){
-      
-              payload = {...payload, tags: tags.map( tag => tag._id)}
+                await Tag
+                    .find({ name: { $in: payload.tags } });
+
+            if (tags.length) {
+
+                payload = { ...payload, tags: tags.map(tag => tag._id) }
             }
-          }
+        }
 
         if (req.file) {
             let tmp_path = req.file.path;
@@ -107,6 +107,17 @@ async function update(req, res, next) {
                 payload = { ...payload, category: category._id };
             } else {
                 delete payload.category;
+            }
+        }
+
+        if (payload.tags && payload.tags.length) {
+            let tags =
+                await Tag
+                    .find({ name: { $in: payload.tags } });
+
+            if (tags.length) {
+
+                payload = { ...payload, tags: tags.map(tag => tag._id) }
             }
         }
 
