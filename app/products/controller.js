@@ -3,6 +3,7 @@ const path = require('path');
 
 const Product = require('./model');
 const Category = require('../categories/model')
+const Tag = require('../tag/model');
 const config = require('../config');
 
 async function store(req, res, next) {
@@ -10,6 +11,7 @@ async function store(req, res, next) {
     try {
 
         let payload = req.body;
+
         if (payload.category) {
             let category =
                 await Category.findOne({ name: { $regex: payload.category, $options: 'i' } });
@@ -20,6 +22,17 @@ async function store(req, res, next) {
                 delete payload.category;
             }
         }
+
+        if(payload.tags && payload.tags.length){
+            let tags =
+              await Tag
+              .find({name: {$in: payload.tags}});
+      
+            if(tags.length){
+      
+              payload = {...payload, tags: tags.map( tag => tag._id)}
+            }
+          }
 
         if (req.file) {
             let tmp_path = req.file.path;
