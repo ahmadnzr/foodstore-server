@@ -31,8 +31,6 @@ function decodeToken() {
                 });
             }
 
-            console.log('TEST', err.name)
-
             next(err);
         }
 
