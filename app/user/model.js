@@ -31,7 +31,7 @@ let userSchema = Schema({
         default: 'user'
     },
     token: [String]
-}, { timestamps = true });
+}, { timestamps : true });
 
 userSchema.path('email').validate(async function(value){
     try{
