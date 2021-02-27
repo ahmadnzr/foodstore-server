@@ -8,6 +8,7 @@ const productRouter = require('./app/products/router');
 const categoryRouter = require('./app/categories/router');
 const tagRouter = require('./app/tag/router');
 const authUser = require('./app/auth/router');
+const { decodeToken } = require('./app/auth/middleware');
 
 var app = express();
 
